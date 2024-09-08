@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:newsletter_sign_up_form_with_success_message/screens/success_screen.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -111,7 +112,7 @@ class MainScreen extends StatelessWidget {
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromRGBO(32, 35, 58, 1),
-                      padding: const EdgeInsets.all(15),
+                      padding: const EdgeInsets.all(20),
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -121,7 +122,13 @@ class MainScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (context) => const SuccessScreen(),
+                      );
+                    },
                     child: const Text("Subscribe to monthly newsletter"),
                   )
                 ],
