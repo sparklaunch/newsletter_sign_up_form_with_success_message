@@ -93,6 +93,37 @@ class MainScreen extends StatelessWidget {
                       ),
                     ],
                   ),
+                  const SizedBox(height: 20),
+                  const TextField(
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                      label: Text(
+                        "Email address",
+                        style: TextStyle(
+                          color: Color.fromRGBO(32, 35, 58, 1),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      hintText: "email@company.com",
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromRGBO(32, 35, 58, 1),
+                      padding: const EdgeInsets.all(15),
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      textStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    onPressed: () {},
+                    child: const Text("Subscribe to monthly newsletter"),
+                  )
                 ],
               ),
             ),
