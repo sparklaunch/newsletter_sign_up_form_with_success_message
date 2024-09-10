@@ -135,13 +135,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    onPressed: () {
-                      showModalBottomSheet(
-                        isScrollControlled: true,
-                        context: context,
-                        builder: (context) => const SuccessScreen(),
-                      );
-                    },
+                    onPressed: onSubscribe,
                     child: const Text("Subscribe to monthly newsletter"),
                   )
                 ],
@@ -157,5 +151,28 @@ class _MainScreenState extends ConsumerState<MainScreen> {
   void dispose() {
     emailAddressTextEditingController.dispose();
     super.dispose();
+  }
+
+  void onSubscribe() {
+    final emailAddress = ref.read(emailAddressProvider);
+    if (emailAddress.trim().isEmpty) {
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Please fill in the email address.")));
+      return;
+    }
+    final emailRegex = RegExp(
+        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+    if (!emailRegex.hasMatch(emailAddress)) {
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Please fill in the right email address.")));
+      return;
+    }
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (context) => const SuccessScreen(),
+    );
   }
 }
