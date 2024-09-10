@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:newsletter_sign_up_form_with_success_message/providers/email_address_provider.dart';
 import 'package:newsletter_sign_up_form_with_success_message/screens/success_screen.dart';
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends ConsumerStatefulWidget {
   const MainScreen({super.key});
   @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends ConsumerState<MainScreen> {
+  final emailAddressTextEditingController = TextEditingController();
+  @override
   Widget build(BuildContext context) {
+    emailAddressTextEditingController.text = ref.watch(emailAddressProvider);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -95,9 +104,13 @@ class MainScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 20),
-                  const TextField(
+                  TextField(
+                    controller: emailAddressTextEditingController,
+                    onChanged: (value) {
+                      ref.read(emailAddressProvider.notifier).setText(value);
+                    },
                     keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       label: Text(
                         "Email address",
                         style: TextStyle(
@@ -138,5 +151,11 @@ class MainScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    emailAddressTextEditingController.dispose();
+    super.dispose();
   }
 }

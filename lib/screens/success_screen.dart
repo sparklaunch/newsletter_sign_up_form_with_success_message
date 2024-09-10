@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:newsletter_sign_up_form_with_success_message/providers/email_address_provider.dart';
 
-class SuccessScreen extends StatelessWidget {
+class SuccessScreen extends ConsumerWidget {
   const SuccessScreen({super.key});
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final emailAddress = ref.watch(emailAddressProvider);
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -30,21 +33,21 @@ class SuccessScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     RichText(
-                      text: const TextSpan(
-                        style: TextStyle(
+                      text: TextSpan(
+                        style: const TextStyle(
                           color: Color.fromRGBO(32, 35, 58, 1),
                           height: 1.5,
                           fontSize: 16,
                         ),
                         children: [
-                          TextSpan(
+                          const TextSpan(
                               text: "A confirmation email has been sent to "),
                           TextSpan(
-                              text: "ash@loremcompany.com.",
-                              style: TextStyle(
+                              text: emailAddress,
+                              style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                               )),
-                          TextSpan(
+                          const TextSpan(
                               text:
                                   " Please open it and click the button inside to confirm your subscription."),
                         ],
